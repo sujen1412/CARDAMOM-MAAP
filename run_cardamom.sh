@@ -11,4 +11,4 @@ export LD_LIBRARY_PATH=/opt/conda/lib:$LD_LIBRARY_PATH
 ./BASH/CARDAMOM_COMPILE.sh
 
 # Run the CARDAMOM_MDF.exe program with the specified arguments in the background with &
-nohup ./C/projects/CARDAMOM_MDF/CARDAMOM_MDF.exe DATA/CARDAMOM_DEMO_DRIVERS_prototype_1005.cbf.nc parameter.cbr > cardamom_mdf_out.log &
+# nohup ./C/projects/CARDAMOM_MDF/CARDAMOM_MDF.exe DATA/CARDAMOM_DEMO_DRIVERS_prototype_1005.cbf.nc parameter.cbr > cardamom_mdf_out.log &
