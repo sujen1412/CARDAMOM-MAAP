@@ -16,4 +16,4 @@ export LD_LIBRARY_PATH="${basedir}:/opt/conda/lib:$LD_LIBRARY_PATH"
 "${basedir}/BASH/CARDAMOM_COMPILE.sh"
 
 # Run the CARDAMOM_MDF.exe program with the specified arguments in the background with &
-"${basedir}/C/projects/CARDAMOM_MDF/CARDAMOM_MDF.exe" DATA/CARDAMOM_DEMO_DRIVERS_prototype_1005.cbf.nc parameter.cbr
+"${basedir}/C/projects/CARDAMOM_MDF/CARDAMOM_MDF.exe" "${basedir}/DATA/CARDAMOM_DEMO_DRIVERS_prototype_1005.cbf.nc" parameter.cbr
