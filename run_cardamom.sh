@@ -11,7 +11,7 @@ eval "$(conda shell.bash hook)"
 conda activate myenv
 
 # Install required Conda packages
-conda install -c conda-forge libnetcdf
+conda install -c conda-forge libnetcdf gcc
 
 # Set LD_LIBRARY_PATH environment variable
 export LD_LIBRARY_PATH="${basedir}:/opt/conda/lib:$LD_LIBRARY_PATH"
