@@ -18,16 +18,8 @@ export LD_LIBRARY_PATH="${basedir}:/opt/conda/lib:$LD_LIBRARY_PATH"
 # Run the CARDAMOM_COMPILE.sh
 "${basedir}/BASH/CARDAMOM_COMPILE.sh"
 
-# Check if an input file argument is provided
-if [ -z "$1" ]; then
-    echo "Usage: $0 <input_file_path>"
-    exit 1
-fi
-
-input_file="${basedir}/$1"
-
-# Run the CARDAMOM_MDF.exe program with the specified arguments in the background with &
-"${basedir}/C/projects/CARDAMOM_MDF/CARDAMOM_MDF.exe" "${input_file}" parameter.cbr
+# Run the CARDAMOM_MDF.exe
+"${basedir}/C/projects/CARDAMOM_MDF/CARDAMOM_MDF.exe" "${basedir}/DATA/CARDAMOM_DEMO_DRIVERS.cbf.nc" parameter.cbr
 
 # Deactivate the Conda environment
 conda deactivate
