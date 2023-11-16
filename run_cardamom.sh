@@ -5,13 +5,7 @@ set -e
 # Determine the directory of the script
 basedir=$(cd "$(dirname "$0")" && pwd -P)
 
-# Parse command-line argument for the input file
-if [ "$#" -ne 1 ]; then
-    echo "Usage: $0 <input_file>"
-    exit 1
-fi
-
-input_file="$1"
+INPUT_FILE=$(ls -d input/*)
 
 # Create and activate a Conda environment
 conda create --name myenv python=3.7
@@ -28,7 +22,7 @@ export LD_LIBRARY_PATH="${basedir}:/opt/conda/lib:$LD_LIBRARY_PATH"
 "${basedir}/BASH/CARDAMOM_COMPILE.sh"
 
 # Run the CARDAMOM_MDF.exe with the provided input file
-"${basedir}/C/projects/CARDAMOM_MDF/CARDAMOM_MDF.exe" "../${input_file}" parameter.cbr
+"${basedir}/C/projects/CARDAMOM_MDF/CARDAMOM_MDF.exe" "${INPUT_FILE}" parameter.cbr
 
 # Deactivate the Conda environment
 conda deactivate
