@@ -5,8 +5,6 @@ set -e
 # Determine the directory of the script
 basedir=$(cd "$(dirname "$0")" && pwd -P)
 
-conda activate myenv
-
 # Set LD_LIBRARY_PATH environment variable
 export LD_LIBRARY_PATH="${basedir}:/opt/conda/lib:$LD_LIBRARY_PATH"
 
