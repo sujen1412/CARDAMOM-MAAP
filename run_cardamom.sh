@@ -22,7 +22,7 @@ export LD_LIBRARY_PATH="${basedir}:/opt/conda/lib:$LD_LIBRARY_PATH"
 "${basedir}/BASH/CARDAMOM_COMPILE.sh"
 
 # Run the CARDAMOM_MDF.exe with the provided input file
-"${basedir}/C/projects/CARDAMOM_MDF/CARDAMOM_MDF.exe" "${INPUT_FILE}" parameter.cbr
+"${basedir}/C/projects/CARDAMOM_MDF/CARDAMOM_MDF.exe" "${INPUT_FILE}" parameter.cbr || true
 
 # Deactivate the Conda environment
 conda deactivate
