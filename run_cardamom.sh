@@ -22,7 +22,7 @@ export LD_LIBRARY_PATH="${basedir}:/opt/conda/lib:$LD_LIBRARY_PATH"
 "${basedir}/BASH/CARDAMOM_COMPILE.sh"
 
 # # Run the CARDAMOM_M.exe with the provided input file
-"${basedir}/C/projects/CARDAMOM_GENERAL/CARDAMOM_RUN_MODEL.exe" "${INPUT_FILE}" "${basedir}/parameter.cbr" "output/output_file.nc"
+"${basedir}/C/projects/CARDAMOM_GENERAL/CARDAMOM_RUN_MODEL.exe" "${INPUT_FILE}" "${basedir}/parameter.cbr" "${basedir}/output/output_file.nc"
 
 # Deactivate the Conda environment
 conda deactivate
