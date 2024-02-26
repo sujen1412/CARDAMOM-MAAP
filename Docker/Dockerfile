@@ -15,6 +15,3 @@ RUN conda create --name myenv python=3.10 -y
 
 # Install required Conda packages
 RUN conda install conda-forge::gcc conda-forge::netcdf4 conda-forge::hdf5 -y
-
-# Run the CARDAMOM_COMPILE.sh
-CMD ["bash", "BASH/CARDAMOM_COMPILE.sh"]

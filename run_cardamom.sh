@@ -14,6 +14,6 @@ fi
 INPUT_FILE="$1"
 
 # Run the CARDAMOM_MDF.exe with the provided input file
-time "${basedir}/C/projects/CARDAMOM_MDF/CARDAMOM_MDF.exe" "${INPUT_FILE}" "${basedir}/output_param_file.cbr"
+# time "${basedir}/C/projects/CARDAMOM_MDF/CARDAMOM_MDF.exe" "${INPUT_FILE}" "${basedir}/output_param_file.cbr"
 
-time "${basedir}/C/projects/CARDAMOM_GENERAL/CARDAMOM_RUN_MODEL.exe" "${INPUT_FILE}" "${basedir}/output_param_file.cbr" "../output/output_file.nc"
+time "${basedir}/C/projects/CARDAMOM_GENERAL/CARDAMOM_RUN_MODEL.exe" "${INPUT_FILE}" "${basedir}/testoutputfile.cbr" "../output/output_file.nc"
