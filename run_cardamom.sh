@@ -26,4 +26,6 @@ export LD_LIBRARY_PATH="${basedir}:/opt/conda/lib:$LD_LIBRARY_PATH"
 # Run the CARDAMOM_MDF.exe with the provided input file
 # time "${basedir}/C/projects/CARDAMOM_MDF/CARDAMOM_MDF.exe" "${INPUT_FILE}" "${basedir}/output_param_file.cbr"
 
-time "${basedir}/C/projects/CARDAMOM_GENERAL/CARDAMOM_RUN_MODEL.exe" "${INPUT_FILE}" "${basedir}/testoutputfile.cbr" "../output/output_file.nc"
+echo "WRITING OUTPUT NC FILE"
+
+time "${basedir}/C/projects/CARDAMOM_GENERAL/CARDAMOM_RUN_MODEL.exe" "${INPUT_FILE}" "${basedir}/testoutputfile.cbr" "output_file.nc"
