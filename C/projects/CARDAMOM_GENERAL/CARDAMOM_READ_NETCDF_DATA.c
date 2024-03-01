@@ -121,6 +121,7 @@ DATA->Mean_FIR=READ_NETCDF_SINGLE_OBS_FIELDS(ncid, "Mean_FIR");
 
 
 //Read parameters and single observations
+DATA->PEQ_NBEmrg=READ_NETCDF_SINGLE_OBS_FIELDS(ncid, "PEQ_NBEmrg");
 DATA->PEQ_Cefficiency=READ_NETCDF_SINGLE_OBS_FIELDS(ncid, "PEQ_Cefficiency");
 DATA->PEQ_CUE=READ_NETCDF_SINGLE_OBS_FIELDS(ncid, "PEQ_CUE");
 DATA->PEQ_C3frac=READ_NETCDF_SINGLE_OBS_FIELDS(ncid, "PEQ_C3frac");
@@ -253,8 +254,6 @@ printf("Done reading all other edc ");
 		DATA->DISTURBANCE_FLUX.reference_mean=ncdf_read_double_attr(ncid, "DISTURBANCE_FLUX","reference_mean");
                                 DEFAULT_REFERENCE_MEAN(&DATA->DISTURBANCE_FLUX);
 
-
-        
 	DATA->DOY.values=ncdf_read_double_var(ncid, "DOY", &(DATA->DOY.length));
 		//DATA->DOY.reference_mean=ncdf_read_double_attr(ncid, "DOY","reference_mean");
     
