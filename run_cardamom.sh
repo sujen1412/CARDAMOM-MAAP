@@ -3,9 +3,13 @@
 set -e
 
 # Determine the directory of the script
-basedir=$(cd "$(dirname "$0")" && pwd -P)
+basedir=$(
+    cd "$(dirname "$0")"
+    pwd -P
+)
 
-INPUT_FILE=$(ls -d ../input/*)
+OUTPUTDIR="${PWD}/output"
+INPUT_FILE=$(ls -d input/*)
 
 "${basedir}/BASH/CARDAMOM_COMPILE.sh"
 
@@ -28,4 +32,4 @@ export LD_LIBRARY_PATH="${basedir}:/opt/conda/lib:$LD_LIBRARY_PATH"
 
 echo "WRITING OUTPUT NC FILE"
 
-time "${basedir}/C/projects/CARDAMOM_GENERAL/CARDAMOM_RUN_MODEL.exe" "${INPUT_FILE}" "${basedir}/testoutputfile.cbr" "output_file.nc"
+time "${basedir}/C/projects/CARDAMOM_GENERAL/CARDAMOM_RUN_MODEL.exe" "${INPUT_FILE}" "${basedir}/testoutputfile.cbr" "${OUTPUTDIR}/output_file.nc"
