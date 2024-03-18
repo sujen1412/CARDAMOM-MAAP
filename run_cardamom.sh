@@ -21,14 +21,19 @@ log() {
 # Default values for running components are false
 export RUN_MDF=false
 export RUN_MODEL=false
+export IS_TEST_RUN=false
 
 # Check positional arguments
 if [[ $1 == "true" ]]; then
-  RUN_MDF=true
+    RUN_MDF=true
 fi
 
 if [[ $2 == "true" ]]; then
-  RUN_MODEL=true
+    RUN_MODEL=true
+fi
+
+if [[ $3 == "true" ]]; then
+    IS_TEST_RUN=true
 fi
 
 run_cardamom() {
@@ -41,21 +46,17 @@ run_cardamom() {
     log "Starting job ${job_id} for input ${input_file}"
 
     if [ "$RUN_MDF" = "true" ]; then
-      if ! time "${basedir}/C/projects/CARDAMOM_MDF/CARDAMOM_MDF.exe" "${input_file}" "${output_param_file}" 2>&1 | tee -a "$LOGFILE"; then
-          log "Error in MDF for job ${job_id}"
-          return 1
-      fi
-
-      log "Completed MDF for job ${job_id}"
+        time "${basedir}/C/projects/CARDAMOM_MDF/CARDAMOM_MDF.exe" "${input_file}" "${output_param_file}" 2>&1 | tee -a "$LOGFILE"
+        log "Completed MDF for job ${job_id}"
     fi
 
     if [ "$RUN_MODEL" = "true" ]; then
-      if ! time "${basedir}/C/projects/CARDAMOM_GENERAL/CARDAMOM_RUN_MODEL.exe" "${input_file}" "${output_param_file}" "${output_nc_file}" 2>&1 | tee -a "${LOGFILE}"; then
-          log "Error in RUN MODEL for job ${job_id}"
-          return 1
-      fi
+        "${basedir}/C/projects/CARDAMOM_GENERAL/CARDAMOM_RUN_MODEL.exe" "${input_file}" "${output_param_file}" "${output_nc_file}" 2>&1 | tee -a "${LOGFILE}"
+        log "Completed job ${job_id}"
+    fi
 
-      log "Completed job ${job_id}"
+    if [ "$IS_TEST_RUN" = "true" ]; then
+        time "${basedir}/C/projects/CARDAMOM_GENERAL/CARDAMOM_RUN_MODEL.exe" "${basedir}/input/PROJSCRIPT_CARDAMOM_CMSFLUX_PRIORS_JUL23_V1_1942.cbf.nc" "${basedir}/cbrfile.cbr" "${OUTPUTDIR}/output_file_test.nc" 2>&1 | tee -a "${LOGFILE}"
     fi
 }
 
