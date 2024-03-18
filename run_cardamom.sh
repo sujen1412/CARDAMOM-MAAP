@@ -2,16 +2,24 @@
 
 set -e
 
-# Determine the directory of the script
+while getopts 'm:r:' flag; do
+    case "${flag}" in
+    m) RUN_MDF="$OPTARG" ;;
+    r) RUN_MODEL="$OPTARG" ;;
+    *)
+        echo "Usage: $0 [-m true/false] [-r true/false]" >&2
+        exit 1
+        ;;
+    esac
+done
+
 basedir=$(cd "$(dirname "$0")" && pwd -P)
 
 OUTPUTDIR="${PWD}/output"
 LOGDIR="${PWD}/logs"
 
-# Ensure the directories exist
 mkdir -p "${LOGDIR}" "${OUTPUTDIR}"
 
-# Log file common for all runs, but you could also make this specific to runs if desired
 LOGFILE="${LOGDIR}/cardamom_run.log"
 
 log() {
@@ -25,28 +33,29 @@ export LD_LIBRARY_PATH="${basedir}:/opt/conda/lib:$LD_LIBRARY_PATH"
 run_cardamom() {
     local input_file=$1
     local job_id=$2
-    # Extract the base name of the input file without its extension for use in output file naming
     local base_name=$(basename "${input_file}" | sed 's/\(.*\)\..*/\1/')
-
-    # Modify file names to include the base name of the input file
     local output_param_file="${OUTPUTDIR}/output_param_${base_name}.cbr"
     local output_nc_file="${OUTPUTDIR}/output_file_${base_name}.nc"
 
     log "Starting job ${job_id} for input ${input_file}"
 
-    if ! time "${basedir}/C/projects/CARDAMOM_MDF/CARDAMOM_MDF.exe" "${input_file}" "${output_param_file}" 2>&1 | tee -a "$LOGFILE"; then
-        log "Error in MDF for job ${job_id}"
-        return 1
+    if [ "$RUN_MDF" = true ]; then
+        if ! "${basedir}/C/projects/CARDAMOM_MDF/CARDAMOM_MDF.exe" "${input_file}" "${output_param_file}" 2>&1 | tee -a "$LOGFILE"; then
+            log "Error in MDF for job ${job_id}"
+            return 1
+        fi
+
+        log "Completed MDF for job ${job_id}"
     fi
 
-    log "Completed MDF for job ${job_id}"
+    if [ "$RUN_MODEL" = true ]; then
+        if ! "${basedir}/C/projects/CARDAMOM_GENERAL/CARDAMOM_RUN_MODEL.exe" "${input_file}" "${output_param_file}" "${output_nc_file}" 2>&1 | tee -a "${LOGFILE}"; then
+            log "Error in RUN MODEL for job ${job_id}"
+            return 1
+        fi
 
-    if ! time "${basedir}/C/projects/CARDAMOM_GENERAL/CARDAMOM_RUN_MODEL.exe" "${input_file}" "${output_param_file}" "${output_nc_file}" 2>&1 | tee -a "${LOGFILE}"; then
-        log "Error in RUN MODEL for job ${job_id}"
-        return 1
+        log "Completed job ${job_id}"
     fi
-
-    log "Completed job ${job_id}"
 }
 
 export -f run_cardamom log
