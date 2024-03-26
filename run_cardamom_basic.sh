@@ -16,4 +16,4 @@ mkdir -p ${OUTPUTDIR}
 
 echo "WRITING OUTPUT NC FILE"
 
-"${basedir}/C/projects/CARDAMOM_GENERAL/CARDAMOM_RUN_MODEL.exe" "${INPUT_FILE}" "${basedir}/cbrfile.cbr" "${OUTPUTDIR}/output_file_basic.nc"
+"${basedir}/C/projects/CARDAMOM_GENERAL/CARDAMOM_RUN_MODEL.exe" "${INPUT_FILE}" "${basedir}/output_param_file.cbr" "${OUTPUTDIR}/output_file_basic.nc"
