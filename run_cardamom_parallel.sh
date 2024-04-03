@@ -2,16 +2,17 @@
 
 set -e
 
-# shellcheck disable=SC1091
-source activate /opt/conda/envs/cardamom 2>&1 | tee -a "$LOGFILE"
-
 basedir=$(cd "$(dirname "$0")" && pwd -P)
 OUTPUTDIR="${PWD}/output"
 nproc=$(nproc)
 LOGDIR="${PWD}/logs"
-LOGFILE="${LOGDIR}/cardamom_run.log"
 
 mkdir -p "${LOGDIR}" "${OUTPUTDIR}"
+
+LOGFILE="${LOGDIR}/cardamom_run.log"
+
+# shellcheck disable=SC1091
+source activate /opt/conda/envs/cardamom 2>&1 | tee -a "$LOGFILE"
 
 log() {
     echo "$(date "+%Y-%m-%d %H:%M:%S") - $1" | tee -a "$LOGFILE"
