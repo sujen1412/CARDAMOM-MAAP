@@ -2,23 +2,20 @@
 
 set -e
 
-LOGDIR="${PWD}/logs"
-LOGFILE="${LOGDIR}/cardamom_run.log"
-mkdir -p "${LOGDIR}"
-
-log() {
-    echo "$(date "+%Y-%m-%d %H:%M:%S") - $1" | tee -a "$LOGFILE"
-}
-
-log "Activating conda environment."
-# Improve this with the correct conda initialization if you're using a script
+# shellcheck disable=SC1091
 source activate /opt/conda/envs/cardamom 2>&1 | tee -a "$LOGFILE"
 
 basedir=$(cd "$(dirname "$0")" && pwd -P)
 OUTPUTDIR="${PWD}/output"
 nproc=$(nproc)
+LOGDIR="${PWD}/logs"
+LOGFILE="${LOGDIR}/cardamom_run.log"
 
-mkdir -p "${OUTPUTDIR}"
+mkdir -p "${LOGDIR}" "${OUTPUTDIR}"
+
+log() {
+    echo "$(date "+%Y-%m-%d %H:%M:%S") - $1" | tee -a "$LOGFILE"
+}
 
 log "Directories for output and logs are set."
 
@@ -34,10 +31,10 @@ run_cardamom() {
 
     log "Starting job ${job_id} for input ${input_file}"
 
-    "${basedir}/C/projects/CARDAMOM_MDF/CARDAMOM_MDF.exe" "${input_file}" "${output_param_file}" 2>&1 | tee -a "$job_logfile"
+    "${basedir}/C/projects/CARDAMOM_MDF/CARDAMOM_MDF.exe" "${input_file}" "${output_param_file}" 2>&1 | tee -a "$job_logfile" || true
     log "Completed MDF for job ${job_id}"
 
-    "${basedir}/C/projects/CARDAMOM_GENERAL/CARDAMOM_RUN_MODEL.exe" "${input_file}" "${output_param_file}" "${output_nc_file}" 2>&1 | tee -a "$job_logfile"
+    "${basedir}/C/projects/CARDAMOM_GENERAL/CARDAMOM_RUN_MODEL.exe" "${input_file}" "${output_param_file}" "${output_nc_file}" 2>&1 | tee -a "$job_logfile" || true
     log "Completed job ${job_id}"
 }
 
