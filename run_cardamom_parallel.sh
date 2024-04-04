@@ -44,5 +44,5 @@ export -f run_cardamom log
 export basedir OUTPUTDIR LOGDIR LOGFILE nproc
 
 log "Beginning parallel processing of inputs."
-find input/ -type f | parallel -j "${nproc}" --joblog "${LOGDIR}/parallel.log" run_cardamom {} '{#}' 2>&1 | tee -a "${LOGFILE}"
+# find input/ -type f | parallel -j "${nproc}" --joblog "${LOGDIR}/parallel.log" run_cardamom {} '{#}' 2>&1 | tee -a "${LOGFILE}"
 log "Parallel processing complete."
