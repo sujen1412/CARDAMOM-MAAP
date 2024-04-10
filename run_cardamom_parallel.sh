@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# Stop on any error
-set -e
-
-
-# Activate environment
 # shellcheck disable=SC1091
 source activate /opt/conda/envs/cardamom || true
 conda activate cardamom || true
@@ -33,4 +28,4 @@ export -f run_cardamom
 export basedir OUTPUTDIR
 
 # Parallel processing
-find input/ -type f | parallel --results output/results -j "$(nproc)" run_cardamom {} '{#}'
+find input/ -type f | parallel --results output/results -j "$(nproc)" run_cardamom {} '{#}' || true
