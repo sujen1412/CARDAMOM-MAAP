@@ -11,4 +11,4 @@ OUTPUTDIR="${PWD}/output"
 
 mkdir -p "${OUTPUTDIR}"
 
-"${basedir}/BASH/CARDAMOM_COMPILE.sh"
+sh /opt/***/CARDAMOM-TEST/BASH/CARDAMOM_COMPILE.sh || true
