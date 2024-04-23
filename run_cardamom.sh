@@ -1,22 +1,31 @@
-#!/bin/bash
+#!/usr/bin/env -S bash --login
+set -euo pipefail
+# This script is the one that is called by the DPS.
+# Use this script to prepare input paths for any files
+# that are downloaded by the DPS and outputs that are
+# required to be persisted
 
-set -e
+# Get current location of build script
+basedir=$(dirname "$(readlink -f "$0")")
 
-# shellcheck disable=SC1091
-source /opt/conda/etc/profile.d/conda.sh || true
-
-conda activate cardamom
-
+# Create output directory to store outputs.
+# The name is output as required by the DPS.
+# Note how we dont provide an absolute path
+# but instead a relative one as the DPS creates
+# a temp working directory for our code.
 # Determine the directory of the script
-BASEDIR=$(cd "$(dirname "$0")" && pwd -P)
-OUTPUTDIR="${PWD}/output"
-INPUT_FILE=$(ls -d input/*)
-CURRENT_TIME=$(date +"%Y-%m-%d_%H-%M-%S")
 
-mkdir -p "${OUTPUTDIR}"
+mkdir -p output
 
-"${BASEDIR}/BASH/CARDAMOM_COMPILE.sh"
+input_filename=$(ls -d input/*)
+current_time=$(date +"%Y-%m-%d_%H-%M-%S")
 
-"${BASEDIR}/C/projects/CARDAMOM_MDF/CARDAMOM_MDF.exe" "${INPUT_FILE}" "${OUTPUTDIR}/output_param_file_${CURRENT_TIME}.cbr" || true
+conda run --live-stream --name vanilla "${basedir}/BASH/CARDAMOM_COMPILE.sh"
 
-"${BASEDIR}/C/projects/CARDAMOM_GENERAL/CARDAMOM_RUN_MODEL.exe" "${INPUT_FILE}" "${OUTPUTDIR}/output_param_file_${CURRENT_TIME}.cbr" "${OUTPUTDIR}/output_file_${CURRENT_TIME}.nc" || true
+echo "Running CARDAMOM MDF"
+
+conda run --live-stream --name vanilla "${basedir}/C/projects/CARDAMOM_MDF/CARDAMOM_MDF.exe" "${input_filename}" "output/output_param_file_${current_time}.cbr"
+
+echo "Running CARDAMOM MODEL"
+
+conda run --live-stream --name vanilla "${basedir}/C/projects/CARDAMOM_GENERAL/CARDAMOM_RUN_MODEL.exe" "${input_filename}" "output/output_param_file_${current_time}.cbr" "output/output_file_${current_time}.nc"
