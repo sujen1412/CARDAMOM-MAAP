@@ -1,10 +1,6 @@
-name: vanilla
+name: cardamom
 channels:
   - conda-forge
-  - defaults
+  - nodefaults
 dependencies:
-  - gcc
-  - hdf5=1.14.3
-  - python=3.10
-  - netcdf4=1.6.5
-  - parallel=20240122
+  - gcc=13.2.0
