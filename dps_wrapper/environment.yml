@@ -1,7 +1,7 @@
 name: vanilla
 channels:
   - conda-forge
-  - nodefaults
+  - defaults
 dependencies:
   - gcc
   - hdf5=1.14.3
