@@ -1,6 +1,6 @@
-name: cardamom
+name: vanilla
 channels:
   - conda-forge
-  - nodefaults
+  - defaults
 dependencies:
   - gcc=13.2.0
