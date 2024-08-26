@@ -17,9 +17,11 @@ basedir=$(dirname "$(readlink -f "$0")")
 
 mkdir -p output
 
-input_filename=$(ls -d input/*)
+input_filename=$(basename $(ls -d input/*))
 current_time=$(date +"%Y-%m-%d_%H-%M-%S")
 
-conda run --live-stream --name vanilla "${basedir}/../BASH/CARDAMOM_COMPILE.sh"
-conda run --live-stream --name vanilla "${basedir}/../C/projects/CARDAMOM_MDF/CARDAMOM_MDF.exe" "${input_filename}" "output/output_param_file_${current_time}.cbr"
-conda run --live-stream --name vanilla "${basedir}/../C/projects/CARDAMOM_GENERAL/CARDAMOM_RUN_MODEL.exe" "${input_filename}" "output/output_param_file_${current_time}.cbr" "output/output_file_${current_time}.nc"
+OUTPUT_PARAM_FILENAME="output_param_file_${input_filename}.cbr"
+OUTPUT_FILENAME="output_file_${input_filename}.nc"
+
+conda run --live-stream --name vanilla "${basedir}/../C/projects/CARDAMOM_MDF/CARDAMOM_MDF.exe" "input/${input_filename}" "output/${OUTPUT_PARAM_FILENAME}"
+conda run --live-stream --name vanilla "${basedir}/../C/projects/CARDAMOM_GENERAL/CARDAMOM_RUN_MODEL.exe" "input/${input_filename}" "output/${OUTPUT_PARAM_FILENAME}" "output/${OUTPUT_FILENAME}"

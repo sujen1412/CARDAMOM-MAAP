@@ -6,3 +6,4 @@ set -euo pipefail
 basedir=$( cd "$(dirname "$0")" ; pwd -P )
 
 conda env update -f ${basedir}/environment.yml
+conda run --live-stream --name python "${basedir}/../BASH/CARDAMOM_COMPILE.sh"
